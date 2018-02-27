@@ -39,8 +39,6 @@ router.post('/sort/:method', async (req, res, next) => {
       out['time'] = performance.getEntriesByName('t')[i].duration
     }
 
-    console.log(out)
-
     res.send(out)
     i++
   }
