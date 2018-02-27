@@ -4,8 +4,10 @@
   "description": "Nuxt.js project",
   "author": "Andrey Borisenko <andrey.borisenko23@gmail.com>",
   "private": true,
+  "engines": {
+    "node": "9.1.0"
+  },
   "scripts": {
-    "heroku-postbuild": "yarn build",
     "dev": "backpack dev",
     "build": "nuxt build && backpack build",
     "start": "cross-env NODE_ENV=production node build/main.js"
