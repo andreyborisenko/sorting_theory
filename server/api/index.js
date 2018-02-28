@@ -11,7 +11,6 @@ const comparers = require('./comparers')
 router.use(bodyParser.json())
 
 router.get('/methods', (req, res, next) => {
-  console.log('here')
   res.send({
     routes: Object.keys(methods),
     comparers: Object.keys(comparers)
