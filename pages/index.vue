@@ -7,34 +7,34 @@
       :rows="7">
     </b-form-textarea>
 
-    <div class="d-flex justify-content-around my-4">
-      <b-input-group prepend="Comparer">
+    <div class="d-flex justify-content-between my-4 flex-wrap">
+      <b-input-group class="col-lg-6 col-sm-12 my-1" prepend="Comparer">
           <b-form-select v-model="comparer">	
             <option v-for="(c, i) in comparers" :value="c" :key="i">{{c}}</option>
           </b-form-select>
       </b-input-group>
-      <b-input-group prepend="Method">
+      <b-input-group class="col-lg-6 col-sm-12 my-1" prepend="Method">
         <b-form-select v-model="method">	
           <option v-for="(m, i) in routes" :value="m" :key="i">{{m}}</option>
         </b-form-select>
       </b-input-group>
     </div>
 
-    <div class="mx-auto w-50 my-4">
-      <b-btn class="w-100" 
+    <div class="d-flex justify-content-center align-items-center flex-lg-column flex-wrap">
+      <b-btn class="col-sm-12 col-lg-6" 
         @click="sortText" 
         variant='primary' 
         size='lg'>Sort text sentences</b-btn>
-      <b-form-checkbox id="raw-mode" class="mt-2" v-model="raw">Use raw mode to compute time performance</b-form-checkbox>
+      <b-form-checkbox id="raw-mode" class="my-2" v-model="raw">Use raw mode to compute time performance</b-form-checkbox>
     </div>
     
-    <div v-if="sorted.length">
-      <h6>
+    <div v-if="sorted.length" class="d-flex align-items-center flex-column flex-wrap">
+      <h4 class="text-center">
         {{res.method}} sort sorted {{sorted.length}} elements for {{res.time}}ms. 
         <span v-if="!res.raw">Made {{res.steps.length}} swaps and {{res.comps}} comparisons</span>
-      </h6>
-      <b-btn v-b-toggle.collapse variant='primary'>Show sorted</b-btn>
-      <b-collapse id="collapse" class="mt-2">
+      </h4>
+      <b-btn v-b-toggle.collapse variant='primary' class="col-lg-6 col-sm-12">Show sorted</b-btn>
+      <b-collapse id="collapse" class="col-sm-12 px-0 mt-2">
         <b-card>
           <b-list-group class="sorted-sentences">
             <b-list-group-item v-for="(s, i) in sorted" :key="i">{{i}}. {{s}}</b-list-group-item>
