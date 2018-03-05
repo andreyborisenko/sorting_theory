@@ -32,11 +32,14 @@ router.post('/sort/:method', async (req, res, next) => {
     if (out instanceof Array) {
       out = {
         array: out,
-        time: performance.getEntriesByName('t')[i].duration
+        raw: true
       }
     } else {
-      out['time'] = performance.getEntriesByName('t')[i].duration
+      out['raw'] = false
     }
+
+    out['time'] = performance.getEntriesByName('t')[i].duration
+    out['method'] = method
 
     res.send(out)
     i++
