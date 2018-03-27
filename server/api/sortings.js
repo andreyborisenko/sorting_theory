@@ -236,3 +236,68 @@ module.exports.quick = ({array, cmp, raw}) => {
     comps
   }
 }
+
+module.exports.heap = ({arr, cmp, raw}) => {
+  let steps = []
+  let comps = 0
+  var arrLen
+
+  console.log('here')
+
+  const heapify = (i) => {
+    let left = 2 * i + 1
+    let right = 2 * i + 2
+    let max = i
+
+    if (!raw) comps++
+    if (left < arrLen && arr[left] > arr[max]) {
+      max = left
+    }
+    
+    console.log('heapify')
+
+    if (!raw) comps++
+    if (right < arrLen && arr[right] > arr[max]) {
+      max = right
+    }
+
+    console.log(max, i)
+
+    if (max !== i) {
+      arr.swap(i, max)
+      heapify(max)
+    }
+  }
+
+  const _heap = () => {
+    arrLen = arr.length
+    
+    console.log('_heap')
+
+    for (let i = Math.floor(arrLen / 2); i >= 0; i--) {
+      heapify(i)
+    }
+
+    console.log('_heap')
+
+    for (let i = arr.length - 1; i > 0; i--) {
+      arr.swap(0, i)
+      if (!raw) steps.push([0, i])
+      arrLen--
+
+      heapify(0)
+    }
+  }
+
+  console.log('here2')
+
+  _heap()
+
+  console.log(arr)
+
+  return raw ? arr : {
+    arr,
+    steps,
+    comps
+  }
+}
