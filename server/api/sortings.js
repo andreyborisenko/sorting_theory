@@ -237,66 +237,48 @@ module.exports.quick = ({array, cmp, raw}) => {
   }
 }
 
-module.exports.heap = ({arr, cmp, raw}) => {
+module.exports.heap = ({array, cmp, raw}) => {
   let steps = []
   let comps = 0
-  var arrLen
 
-  console.log('here')
+  const sink = (arr, i, n) => {
+    let left = i * 2
+    if (left > n) return // if left child is out-of-bounds do nothing
 
-  const heapify = (i) => {
-    let left = 2 * i + 1
-    let right = 2 * i + 2
-    let max = i
+    let right = left + 1
+    if (!raw) comps++
+    let max = (right > n ? left : (cmp(arr[left]) > cmp(arr[right]) ? left : right)) // get max child
 
     if (!raw) comps++
-    if (left < arrLen && arr[left] > arr[max]) {
-      max = left
-    }
-    
-    console.log('heapify')
+    if (cmp(arr[i]) >= cmp(arr[max])) return // if parent is greater than max child do nothing
 
-    if (!raw) comps++
-    if (right < arrLen && arr[right] > arr[max]) {
-      max = right
-    }
-
-    console.log(max, i)
-
-    if (max !== i) {
-      arr.swap(i, max)
-      heapify(max)
-    }
+    if (!raw) steps.push(i, max)
+    arr.swap(i, max) // swap parent with max child element
+    sink(arr, max, n) // continue sink with max child
   }
 
-  const _heap = () => {
-    arrLen = arr.length
-    
-    console.log('_heap')
-
-    for (let i = Math.floor(arrLen / 2); i >= 0; i--) {
-      heapify(i)
+  const _heap = (arr) => {
+    for (let i = Math.floor(arr.length / 2 - 1); i >= 0; i--) {
+      sink(arr, i, arr.length)
     }
-
-    console.log('_heap')
 
     for (let i = arr.length - 1; i > 0; i--) {
+      if (!raw) steps.push(0, i)
       arr.swap(0, i)
-      if (!raw) steps.push([0, i])
-      arrLen--
-
-      heapify(0)
+      sink(arr, 0, i - 1)
     }
+
+    return arr
   }
 
-  console.log('here2')
+  console.log(array)
 
-  _heap()
+  array = _heap(array)
 
-  console.log(arr)
+  console.log(array)
 
-  return raw ? arr : {
-    arr,
+  return raw ? array : {
+    array,
     steps,
     comps
   }
